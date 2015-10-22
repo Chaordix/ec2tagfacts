@@ -72,8 +72,11 @@ class ec2tagfacts (
 
   $directory = dirname($aws_cli_ini_settings)
 
-  package { $pippkg:
-    ensure => 'installed',
+  constraint {
+    "python-pip-package":
+      resource  => Package[$pippkg],
+      allow     => { ensure => [ 'present' ] },
+      weak      => true;
   }
 
   package { $rubyjsonpkg:
