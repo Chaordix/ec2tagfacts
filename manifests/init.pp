@@ -73,7 +73,7 @@ class ec2tagfacts (
   $directory = dirname($aws_cli_ini_settings)
 
   constraint {
-    "python-pip-package":
+    "python-pip-package_ec2tagfacts":
       resource  => Package[$pippkg],
       allow     => { ensure => [ 'present' ] },
       weak      => true;
@@ -86,7 +86,7 @@ class ec2tagfacts (
   package { $awscli:
     ensure   => 'installed',
     provider => 'pip',
-    require  => [Package[$pippkg],Package[$rubyjsonpkg]],
+    require  => [Constraint['python-pip-package_ec2tagfacts'],Package[$rubyjsonpkg]],
   }
 
   file { $directory:
